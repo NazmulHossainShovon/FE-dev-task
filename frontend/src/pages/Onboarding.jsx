@@ -252,7 +252,7 @@ export default function Onboarding() {
   const handleOTPVerify = async (code) => {
     try {
       const response = await fetch(
-        `${BACKEND_URL}/api/v1/user-verification/verify-otp`,
+        `${BACKEND_URL}/api/v1/user-verification/verify-otp?onboardingId=${onboardingId}`,
         {
           method: "POST",
           headers: {
