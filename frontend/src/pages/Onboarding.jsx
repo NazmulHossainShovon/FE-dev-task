@@ -271,6 +271,8 @@ export default function Onboarding() {
 
       console.log("OTP verified successfully");
 
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
       // Now that we have auth token, upload the CSV file if present
       if (keywordFile) {
         try {
