@@ -95,6 +95,7 @@ server.put(
   "/api/v1/business-logic/csv-upload",
   upload.single("file"),
   (req, res) => {
+    console.log("ccsv uploaddddddd");
     const { onboardingId } = req.query;
     const sessionToken = req.cookies?.session_token;
     const authToken = req.cookies?.auth_token;
@@ -192,7 +193,17 @@ server.put("/api/v1/complete-onboarding", (req, res) => {
   res.json({ success: true, message: "Onboarding completed successfully!" });
 });
 
-// Use lowdb router
-server.use(router);
+// Use lowdb router for remaining routes (with /api prefix to avoid conflicts)
+server.use("/api/db", router);
+
+// Start server if this file is run directly
+if (require.main === module) {
+  const PORT = process.env.PORT || 3001;
+  server.listen(PORT, () => {
+    console.log(`JSON Server is running on port ${PORT}`);
+    console.log(`Custom API routes available at /api/v1/*`);
+    console.log(`JSON DB routes available at /api/db/*`);
+  });
+}
 
 module.exports = server;
