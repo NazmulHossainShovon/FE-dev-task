@@ -2,7 +2,7 @@
   "name": "mock-api",
   "version": "1.0.0",
   "scripts": {
-    "start": "json-server --watch db.json --routes routes.json --middlewares server.js --port 3001"
+    "start": "json-server --watch db.json --middlewares server.js --port 3001"
   },
   "dependencies": {
     "json-server": "^0.17.4",

@@ -25,8 +25,7 @@ const setCookie = (res, name, value, maxAge = 60 * 60 * 24 * 30) => {
 const upload = multer({ storage: multer.memoryStorage() });
 
 // ── 1. Start Session ─────────────────────────────────────────────────────
-server.get("/session-start", (req, res) => {
-  console.log("session start called");
+server.get("/api/v1/session/start", (req, res) => {
   const onboardingId = uuidv4();
   const sessionToken = uuidv4();
 
@@ -40,11 +39,11 @@ server.get("/session-start", (req, res) => {
 });
 
 // ── 2. Send OTP ──────────────────────────────────────────────────────────
-server.post("/send-otp", (req, res) => {
+server.post("/api/v1/user-verification/send-otp", (req, res) => {
   const sessionToken = req.cookies?.session_token;
   const { onboardingId } = req.query;
   const { email } = req.body;
-
+  console.log(sessionToken, onboardingId, email);
   if (!sessionToken || !onboardingId || !email) {
     return res.status(400).json({ success: false, message: "Missing data" });
   }
@@ -64,7 +63,7 @@ server.post("/send-otp", (req, res) => {
 });
 
 // ── 3. Verify OTP ────────────────────────────────────────────────────────
-server.post("/verify-otp", (req, res) => {
+server.post("/api/v1/user-verification/verify-otp", (req, res) => {
   const { onboardingId } = req.query;
   const { email, otp } = req.body;
   const sessionToken = req.cookies?.session_token;
@@ -90,7 +89,7 @@ server.post("/verify-otp", (req, res) => {
 });
 
 // ── 4. CSV Upload (multipart/form-data) ───────────────────────────────────
-server.put("/csv-upload", upload.single("file"), (req, res) => {
+server.put("/api/v1/business-logic/csv-upload", upload.single("file"), (req, res) => {
   const { onboardingId } = req.query;
   const sessionToken = req.cookies?.session_token;
   const authToken = req.cookies?.auth_token;
@@ -112,7 +111,7 @@ server.put("/csv-upload", upload.single("file"), (req, res) => {
 });
 
 // ── 5. Get Started (after CSV) ───────────────────────────────────────────
-server.post("/get-started", (req, res) => {
+server.post("/api/v1/business-logic/get-started", (req, res) => {
   const { onboardingId } = req.query;
   const authToken = req.cookies?.auth_token;
 
@@ -147,7 +146,7 @@ server.post("/get-started", (req, res) => {
 });
 
 // ── 6. Confirm Business Logic ───────────────────────────────────────────
-server.post("/confirm-business", (req, res) => {
+server.post("/api/v1/business-logic/confirm", (req, res) => {
   const { onboardingId } = req.query;
   const authToken = req.cookies?.auth_token;
   const businessLogic = req.body;
@@ -168,7 +167,7 @@ server.post("/confirm-business", (req, res) => {
 });
 
 // ── 7. Complete Onboarding ──────────────────────────────────────────────
-server.put("/complete-onboarding", (req, res) => {
+server.put("/api/v1/complete-onboarding", (req, res) => {
   const { onboardingId } = req.query;
   const authToken = req.cookies?.auth_token;
 

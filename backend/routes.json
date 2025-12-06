@@ -1,9 +1,0 @@
-{
-  "/api/v1/session/start": "/session-start",
-  "/api/v1/user-verification/send-otp": "/send-otp",
-  "/api/v1/user-verification/verify-otp": "/verify-otp",
-  "/api/v1/business-logic/csv-upload": "/csv-upload",
-  "/api/v1/business-logic/get-started": "/get-started",
-  "/api/v1/business-logic/confirm": "/confirm-business",
-  "/api/v1/complete-onboarding": "/complete-onboarding"
-}

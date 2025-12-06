@@ -211,7 +211,7 @@ export default function Onboarding() {
 
       // User verification - send OTP
       const response = await fetch(
-        `${BACKEND_URL}/api/v1/user-verification/send-otp`,
+        `${BACKEND_URL}/api/v1/user-verification/send-otp?onboardingId=${onboardingId}`,
         {
           method: "POST",
           headers: {
