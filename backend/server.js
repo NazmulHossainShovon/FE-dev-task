@@ -1,5 +1,6 @@
 const jsonServer = require("json-server");
 const multer = require("multer");
+const cookieParser = require("cookie-parser");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
 
@@ -9,6 +10,7 @@ const middlewares = jsonServer.defaults();
 
 server.use(middlewares);
 server.use(jsonServer.bodyParser);
+server.use(cookieParser());
 
 // ── Cookie helper ─────────────────────────────────────
 const setCookie = (res, name, value, maxAge = 60 * 60 * 24 * 30) => {
@@ -43,7 +45,7 @@ server.post("/api/v1/user-verification/send-otp", (req, res) => {
   const sessionToken = req.cookies?.session_token;
   const { onboardingId } = req.query;
   const { email } = req.body;
-  console.log(sessionToken, onboardingId, email);
+
   if (!sessionToken || !onboardingId || !email) {
     return res.status(400).json({ success: false, message: "Missing data" });
   }
@@ -89,26 +91,30 @@ server.post("/api/v1/user-verification/verify-otp", (req, res) => {
 });
 
 // ── 4. CSV Upload (multipart/form-data) ───────────────────────────────────
-server.put("/api/v1/business-logic/csv-upload", upload.single("file"), (req, res) => {
-  const { onboardingId } = req.query;
-  const sessionToken = req.cookies?.session_token;
-  const authToken = req.cookies?.auth_token;
+server.put(
+  "/api/v1/business-logic/csv-upload",
+  upload.single("file"),
+  (req, res) => {
+    const { onboardingId } = req.query;
+    const sessionToken = req.cookies?.session_token;
+    const authToken = req.cookies?.auth_token;
 
-  if (!sessionToken || !authToken || !onboardingId || !req.file) {
-    return res.status(400).json({ success: false, message: "Bad request" });
+    if (!sessionToken || !authToken || !onboardingId || !req.file) {
+      return res.status(400).json({ success: false, message: "Bad request" });
+    }
+
+    // Just pretend we processed the CSV
+    router.db
+      .set(`onboardings.${onboardingId}`, {
+        ...router.db.get(`onboardings.${onboardingId}`).value(),
+        csvUploaded: true,
+        step: "business-logic",
+      })
+      .write();
+
+    res.json({ success: true, message: "CSV uploaded and processed" });
   }
-
-  // Just pretend we processed the CSV
-  router.db
-    .set(`onboardings.${onboardingId}`, {
-      ...router.db.get(`onboardings.${onboardingId}`).value(),
-      csvUploaded: true,
-      step: "business-logic",
-    })
-    .write();
-
-  res.json({ success: true, message: "CSV uploaded and processed" });
-});
+);
 
 // ── 5. Get Started (after CSV) ───────────────────────────────────────────
 server.post("/api/v1/business-logic/get-started", (req, res) => {

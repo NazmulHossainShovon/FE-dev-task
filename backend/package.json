@@ -5,6 +5,7 @@
     "start": "json-server --watch db.json --middlewares server.js --port 3001"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "json-server": "^0.17.4",
     "multer": "^1.4.5-lts.1",
     "uuid": "^9.0.1"
