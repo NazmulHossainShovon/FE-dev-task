@@ -16,6 +16,27 @@ import {
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
+// Add a helper function for retry logic
+const fetchWithRetry = async (url, options, retries = 3, delay = 1000) => {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response; // Success, return the response
+    } catch (error) {
+      console.warn(`Attempt ${attempt + 1} failed:`, error.message);
+      if (attempt === retries) {
+        // If this was the last attempt, throw the error
+        throw error;
+      }
+      // Wait for a delay before the next attempt
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+};
+
 export default function OnboardingComplete() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -41,38 +62,34 @@ export default function OnboardingComplete() {
     }
   }, []);
 
-  const completeOnboarding = () => {
+  const completeOnboarding = async () => {
     setLoading(true);
-    fetch(
-      `${BACKEND_URL}/api/v1/complete-onboarding?onboardingId=${onboardingId}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
+    try {
+      // Use the retry helper function
+      const response = await fetchWithRetry(
+        `${BACKEND_URL}/api/v1/complete-onboarding?onboardingId=${onboardingId}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        },
+        3, // Number of retries
+        2000 // Delay between retries in milliseconds
+      );
+
+      const data = await response.json();
+      if (data.success === false) {
+        throw new Error(data.message || "Failed to confirm business logic");
       }
-    )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(
-            "Failed to complete onboarding at /api/v1/complete-onboarding"
-          );
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (data.success === false) {
-          throw new Error(data.message || "Failed to confirm business logic");
-        }
-        console.log("Onboarding completed successfully");
-      })
-      .catch((error) => {
-        console.error("Error completing onboarding:", error);
-      })
-      .finally(() => {
-        setLoading(false);
-        // Session cleanup
-        localStorage.clear();
-      });
+      console.log("Onboarding completed successfully");
+    } catch (error) {
+      console.error("Error completing onboarding after retries:", error);
+      // Optionally, you could display an error message to the user or navigate to an error page
+    } finally {
+      setLoading(false);
+      // Session cleanup
+      localStorage.clear();
+    }
   };
 
   return (
