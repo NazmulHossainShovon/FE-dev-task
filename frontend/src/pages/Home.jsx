@@ -112,7 +112,12 @@ export default function Home() {
       window.location.href =
         "mailto:sales@elelem.com?subject=Elite Plan Inquiry";
     } else {
-      navigate(createPageUrl("Payment"));
+      const params = new URLSearchParams({
+        plan: tier.id,
+        currency: currency,
+      });
+
+      navigate(`${createPageUrl("Payment")}?${params.toString()}`);
     }
   };
 
