@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import confetti from "canvas-confetti";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { getLocalStorageWithExpiry } from "@/utils";
+import { getLocalStorageWithExpiry, createPageUrl } from "@/utils";
 import {
   CheckCircle2,
   Sparkles,
@@ -17,12 +18,14 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function OnboardingComplete() {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const onboardingId = getLocalStorageWithExpiry("onboardingId");
   const confettiFired = useRef(false);
 
   useEffect(() => {
     if (!onboardingId) {
       console.error("Onboarding ID not found in local storage.");
+      navigate(createPageUrl("Onboarding"));
       return;
     }
     completeOnboarding();
