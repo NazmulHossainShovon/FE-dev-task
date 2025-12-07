@@ -42,17 +42,20 @@ app.use((req, res, next) => {
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:3000",
-    "http://127.0.0.1:3000"
+    "http://127.0.0.1:3000",
   ];
-  
+
   if (allowedOrigins.includes(origin)) {
     res.header("Access-Control-Allow-Origin", origin);
   }
-  
+
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Cookie");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization, Cookie"
+  );
   res.header("Access-Control-Allow-Credentials", "true");
-  
+
   if (req.method === "OPTIONS") {
     res.sendStatus(200);
   } else {
@@ -174,13 +177,13 @@ app.post("/api/v1/business-logic/get-started", (req, res) => {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
 
-  const db = readDB();
-  const onboarding = db.onboardings[onboardingId];
-  if (!onboarding?.csvUploaded) {
-    return res
-      .status(400)
-      .json({ success: false, message: "CSV not uploaded yet" });
-  }
+  // const db = readDB();
+  // const onboarding = db.onboardings[onboardingId];
+  // if (!onboarding?.csvUploaded) {
+  //   return res
+  //     .status(400)
+  //     .json({ success: false, message: "CSV not uploaded yet" });
+  // }
 
   // Return dummy business logic so frontend can edit
   const dummyBusinessLogic = {
@@ -247,65 +250,65 @@ app.put("/api/v1/complete-onboarding", (req, res) => {
 app.get("/api/db/:resource", (req, res) => {
   const { resource } = req.params;
   const db = readDB();
-  
+
   if (!db[resource]) {
     return res.status(404).json({ error: "Resource not found" });
   }
-  
+
   res.json(db[resource]);
 });
 
 app.get("/api/db/:resource/:id", (req, res) => {
   const { resource, id } = req.params;
   const db = readDB();
-  
+
   if (!db[resource] || !db[resource][id]) {
     return res.status(404).json({ error: "Resource or item not found" });
   }
-  
+
   res.json(db[resource][id]);
 });
 
 app.post("/api/db/:resource", (req, res) => {
   const { resource } = req.params;
   const db = readDB();
-  
+
   if (!db[resource]) {
     db[resource] = {};
   }
-  
+
   const id = uuidv4();
   db[resource][id] = { id, ...req.body };
   writeDB(db);
-  
+
   res.status(201).json(db[resource][id]);
 });
 
 app.put("/api/db/:resource/:id", (req, res) => {
   const { resource, id } = req.params;
   const db = readDB();
-  
+
   if (!db[resource]) {
     db[resource] = {};
   }
-  
+
   db[resource][id] = { id, ...req.body };
   writeDB(db);
-  
+
   res.json(db[resource][id]);
 });
 
 app.delete("/api/db/:resource/:id", (req, res) => {
   const { resource, id } = req.params;
   const db = readDB();
-  
+
   if (!db[resource] || !db[resource][id]) {
     return res.status(404).json({ error: "Resource or item not found" });
   }
-  
+
   delete db[resource][id];
   writeDB(db);
-  
+
   res.status(204).send();
 });
 
