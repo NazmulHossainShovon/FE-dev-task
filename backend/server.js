@@ -102,7 +102,7 @@ app.post("/api/v1/user-verification/send-otp", (req, res) => {
   }
 
   // Simulate sending OTP
-  const otp = "123456"; // in real mock you could randomize
+  const otp = "123456";
   const db = readDB();
   db.onboardings[onboardingId] = {
     ...db.onboardings[onboardingId],
@@ -146,7 +146,6 @@ app.put(
   "/api/v1/business-logic/csv-upload",
   upload.single("file"),
   (req, res) => {
-    console.log("csv upload");
     const { onboardingId } = req.query;
     const sessionToken = req.cookies?.session_token;
     const authToken = req.cookies?.auth_token;
@@ -176,14 +175,6 @@ app.post("/api/v1/business-logic/get-started", (req, res) => {
   if (!authToken || !onboardingId) {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
-
-  // const db = readDB();
-  // const onboarding = db.onboardings[onboardingId];
-  // if (!onboarding?.csvUploaded) {
-  //   return res
-  //     .status(400)
-  //     .json({ success: false, message: "CSV not uploaded yet" });
-  // }
 
   // Return dummy business logic so frontend can edit
   const dummyBusinessLogic = {
@@ -242,7 +233,6 @@ app.put("/api/v1/complete-onboarding", (req, res) => {
       .json({ success: false, message: "Previous steps not finished" });
   }
 
-  // In real app you would create user, client, etc.
   res.json({ success: true, message: "Onboarding completed successfully!" });
 });
 
