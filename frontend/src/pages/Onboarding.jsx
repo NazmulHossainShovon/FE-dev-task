@@ -21,6 +21,11 @@ import {
 } from "lucide-react";
 import OTPVerification from "@/components/onboarding/OTPVerification";
 import { Textarea } from "@/components/ui/textarea";
+import OnboardingHeader from "@/components/onboarding/OnboardingHeader";
+import OnboardingBusinessForm from "@/components/onboarding/OnboardingBusinessForm";
+import OnboardingPersonalForm from "@/components/onboarding/OnboardingPersonalForm";
+import OnboardingSidebar from "@/components/onboarding/OnboardingSidebar";
+import OnboardingFooter from "@/components/onboarding/OnboardingFooter";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -325,17 +330,7 @@ export default function Onboarding() {
   return (
     <div className="min-h-screen flex">
       <div className="w-full lg:w-1/2 flex flex-col bg-white">
-        <div className="px-8 py-6 flex justify-center">
-          <div className="w-full max-w-md">
-            <Link to={createPageUrl("Home")}>
-              <img
-                src="https://cdn.geo.elelem.ai/onboarding/91638358f_elelem2025logoPrimary.png"
-                alt="elelem"
-                className="h-8 cursor-pointer hover:opacity-80 transition-opacity"
-              />
-            </Link>
-          </div>
-        </div>
+        <OnboardingHeader />
 
         <div className="flex-1 flex items-center justify-center px-8 py-12 overflow-y-auto">
           <div className="w-full max-w-md">
@@ -348,283 +343,22 @@ export default function Onboarding() {
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-7">
-              <div className="space-y-3">
-                <Label
-                  htmlFor="website"
-                  className="text-base font-semibold text-gray-900"
-                >
-                  Website
-                </Label>
-                <Input
-                  id="website"
-                  value={formData.website}
-                  onChange={(e) =>
-                    saveFormData({ ...formData, website: e.target.value })
-                  }
-                  placeholder="https://yourbrand.com"
-                  className={`h-14 text-base px-4 ${
-                    errors.website ? "border-red-500" : "border-gray-300"
-                  }`}
-                />
-                {errors.website && (
-                  <p className="text-red-500 text-sm">{errors.website}</p>
-                )}
-              </div>
+              <OnboardingBusinessForm
+                formData={formData}
+                saveFormData={saveFormData}
+                errors={errors}
+                keywordFile={keywordFile}
+                setKeywordFile={setKeywordFile}
+                handleFileChange={handleFileChange}
+              />
 
-              <div className="space-y-3">
-                <Label
-                  htmlFor="country"
-                  className="text-base font-semibold text-gray-900"
-                >
-                  Country
-                </Label>
-                <select
-                  id="country"
-                  value={formData.country}
-                  onChange={(e) =>
-                    saveFormData({ ...formData, country: e.target.value })
-                  }
-                  className={`w-full h-14 text-base px-4 border rounded-lg bg-white ${
-                    errors.country ? "border-red-500" : "border-gray-300"
-                  } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900`}
-                >
-                  <option value="">Select your country</option>
-                  <option value="United States">United States</option>
-                  <option value="United Kingdom">United Kingdom</option>
-                  <option value="Canada">Canada</option>
-                  <option value="Australia">Australia</option>
-                  <option value="Germany">Germany</option>
-                  <option value="France">France</option>
-                  <option value="Spain">Spain</option>
-                  <option value="Italy">Italy</option>
-                  <option value="Netherlands">Netherlands</option>
-                  <option value="Belgium">Belgium</option>
-                  <option value="Switzerland">Switzerland</option>
-                  <option value="Austria">Austria</option>
-                  <option value="Sweden">Sweden</option>
-                  <option value="Norway">Norway</option>
-                  <option value="Denmark">Denmark</option>
-                  <option value="Finland">Finland</option>
-                  <option value="Ireland">Ireland</option>
-                  <option value="Poland">Poland</option>
-                  <option value="Czech Republic">Czech Republic</option>
-                  <option value="Portugal">Portugal</option>
-                  <option value="Greece">Greece</option>
-                  <option value="Japan">Japan</option>
-                  <option value="South Korea">South Korea</option>
-                  <option value="Singapore">Singapore</option>
-                  <option value="Hong Kong">Hong Kong</option>
-                  <option value="Bangladesh">Bangladesh</option>
-                  <option value="India">India</option>
-                  <option value="China">China</option>
-                  <option value="Brazil">Brazil</option>
-                  <option value="Mexico">Mexico</option>
-                  <option value="Argentina">Argentina</option>
-                  <option value="Chile">Chile</option>
-                  <option value="South Africa">South Africa</option>
-                  <option value="Israel">Israel</option>
-                  <option value="United Arab Emirates">
-                    United Arab Emirates
-                  </option>
-                  <option value="Saudi Arabia">Saudi Arabia</option>
-                  <option value="New Zealand">New Zealand</option>
-                  <option value="Other">Other</option>
-                </select>
-                {errors.country && (
-                  <p className="text-red-500 text-sm">{errors.country}</p>
-                )}
-              </div>
-
-              <div className="space-y-3">
-                <Label
-                  htmlFor="business_description"
-                  className="text-base font-semibold text-gray-900"
-                >
-                  Tell us about your business{" "}
-                  <span className="text-gray-500 font-normal text-sm">
-                    (recommended but optional)
-                  </span>
-                </Label>
-                <Textarea
-                  id="business_description"
-                  value={formData.business_description || ""}
-                  onChange={(e) =>
-                    saveFormData({
-                      ...formData,
-                      business_description: e.target.value,
-                    })
-                  }
-                  placeholder="e.g. We provide cloud-based HR software for small businesses. Our ideal customers are companies with 10-100 employees looking to streamline their HR processes..."
-                  className="min-h-32 text-base px-4 py-3 resize-none"
-                />
-              </div>
-
-              <div className="space-y-3">
-                <Label className="text-base font-semibold text-gray-900">
-                  Upload an export of your Google Search Console or SEO keyword
-                  list{" "}
-                  <span className="text-gray-500 font-normal text-sm">
-                    (recommended but optional)
-                  </span>
-                </Label>
-
-                <div className="relative">
-                  <input
-                    type="file"
-                    id="keyword-file"
-                    accept=".csv"
-                    onChange={handleFileChange}
-                    className="hidden"
-                  />
-                  {!keywordFile ? (
-                    <label
-                      htmlFor="keyword-file"
-                      className="flex items-center justify-center gap-2 w-full h-14 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 cursor-pointer transition-colors"
-                    >
-                      <Upload className="w-5 h-5 text-gray-500" />
-                      <span className="text-base text-gray-600">
-                        Choose file
-                      </span>
-                    </label>
-                  ) : (
-                    <div className="flex items-center justify-between p-4 border border-gray-300 rounded-lg bg-gray-50">
-                      <div className="flex items-center gap-2">
-                        <Upload className="w-5 h-5 text-green-600" />
-                        <span className="text-base text-gray-700">
-                          {keywordFile.name}
-                        </span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => setKeywordFile(null)}
-                        className="text-gray-400 hover:text-gray-600"
-                      >
-                        <X className="w-5 h-5" />
-                      </button>
-                    </div>
-                  )}
-                </div>
-                {errors.file && (
-                  <p className="text-red-500 text-sm">{errors.file}</p>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label
-                  htmlFor="email"
-                  className="text-base font-semibold text-gray-900"
-                >
-                  Work email
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) =>
-                    saveFormData({ ...formData, email: e.target.value })
-                  }
-                  placeholder="john@company.com"
-                  className={`h-14 text-base px-4 ${
-                    errors.email ? "border-red-500" : "border-gray-300"
-                  }`}
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-                )}
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label
-                    htmlFor="first_name"
-                    className="text-base font-semibold text-gray-900"
-                  >
-                    First name
-                  </Label>
-                  <Input
-                    id="first_name"
-                    value={formData.first_name}
-                    onChange={(e) =>
-                      saveFormData({ ...formData, first_name: e.target.value })
-                    }
-                    placeholder="First name"
-                    className={`h-14 text-base px-4 ${
-                      errors.first_name ? "border-red-500" : "border-gray-300"
-                    }`}
-                  />
-                  {errors.first_name && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.first_name}
-                    </p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <Label
-                    htmlFor="last_name"
-                    className="text-base font-semibold text-gray-900"
-                  >
-                    Last name
-                  </Label>
-                  <Input
-                    id="last_name"
-                    value={formData.last_name}
-                    onChange={(e) =>
-                      saveFormData({ ...formData, last_name: e.target.value })
-                    }
-                    placeholder="Last name"
-                    className={`h-14 text-base px-4 ${
-                      errors.last_name ? "border-red-500" : "border-gray-300"
-                    }`}
-                  />
-                  {errors.last_name && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.last_name}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label
-                  htmlFor="password"
-                  className="text-base font-semibold text-gray-900"
-                >
-                  Password
-                </Label>
-                <div className="relative">
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    value={formData.password}
-                    onChange={(e) =>
-                      saveFormData({ ...formData, password: e.target.value })
-                    }
-                    placeholder="Enter password"
-                    className={`h-14 text-base px-4 pr-12 ${
-                      errors.password ? "border-red-500" : "border-gray-300"
-                    }`}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                  >
-                    {showPassword ? (
-                      <EyeOff className="w-5 h-5" />
-                    ) : (
-                      <Eye className="w-5 h-5" />
-                    )}
-                  </button>
-                </div>
-                {errors.password ? (
-                  <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-                ) : (
-                  <p className="text-gray-400 text-sm mt-1">
-                    Password must be at least 8 characters
-                  </p>
-                )}
-              </div>
+              <OnboardingPersonalForm
+                formData={formData}
+                saveFormData={saveFormData}
+                errors={errors}
+                showPassword={showPassword}
+                setShowPassword={setShowPassword}
+              />
 
               {errors.submit && (
                 <div className="bg-red-50 text-red-700 p-3 rounded-lg text-sm">
@@ -652,68 +386,10 @@ export default function Onboarding() {
           </div>
         </div>
 
-        <div className="p-8 flex justify-between text-sm text-gray-500">
-          <a href="#" className="hover:text-gray-700">
-            Contact us
-          </a>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-gray-700">
-              Privacy Policy
-            </a>
-            <span>© 2025 elelem</span>
-          </div>
-        </div>
+        <OnboardingFooter />
       </div>
 
-      <div
-        className="hidden lg:flex w-1/2 items-start justify-center p-12 pt-32 relative overflow-hidden"
-        style={{
-          backgroundImage:
-            "url(https://cdn.geo.elelem.ai/onboarding/95909b4b7_elelembackground.jpg)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="max-w-xl relative z-10">
-          <div className="bg-white rounded-2xl shadow-lg p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
-              The elelem 4-step route to winning
-              <br />
-              in AI Search
-            </h3>
-            <div className="space-y-4 text-gray-700 leading-relaxed">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[#1E8B8B] bg-opacity-10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Search className="w-5 h-5 text-[#1E8B8B]" />
-                </div>
-                <p>Find the questions your audience is asking</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[#1E8B8B] bg-opacity-10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <TrendingUp className="w-5 h-5 text-[#1E8B8B]" />
-                </div>
-                <p>See your brand's AI Search visibility vs Competitors</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[#1E8B8B] bg-opacity-10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Target className="w-5 h-5 text-[#1E8B8B]" />
-                </div>
-                <p>Identify high-value, high-intent questions</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[#1E8B8B] bg-opacity-10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Lightbulb className="w-5 h-5 text-[#1E8B8B]" />
-                </div>
-                <p>How to optimize your content to boost visibility</p>
-              </div>
-              <p className="mt-6">
-                Then simply publish and expose your content to LLMs and
-                transparently track the results.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <OnboardingSidebar />
 
       <OTPVerification
         isOpen={showOTP}
