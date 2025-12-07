@@ -1,26 +1,13 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import {
   createPageUrl,
   getLocalStorageWithExpiry,
   setLocalStorageWithExpiry,
 } from "@/utils";
-import {
-  Upload,
-  X,
-  Eye,
-  EyeOff,
-  Search,
-  TrendingUp,
-  Target,
-  Lightbulb,
-} from "lucide-react";
+
 import OTPVerification from "@/components/onboarding/OTPVerification";
-import { Textarea } from "@/components/ui/textarea";
 import OnboardingHeader from "@/components/onboarding/OnboardingHeader";
 import OnboardingBusinessForm from "@/components/onboarding/OnboardingBusinessForm";
 import OnboardingPersonalForm from "@/components/onboarding/OnboardingPersonalForm";
@@ -338,8 +325,8 @@ export default function Onboarding() {
               Start tracking your brand
             </h1>
             <p className="text-gray-600 mb-10">
-              This will be the first brand you'll track on elelem — you can add
-              more later.
+              This will be the first brand you&apos;ll track on elelem — you can
+              add more later.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-7">

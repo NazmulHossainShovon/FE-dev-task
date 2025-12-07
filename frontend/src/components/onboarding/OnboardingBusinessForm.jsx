@@ -2,6 +2,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Upload, X } from "lucide-react";
+import PropTypes from "prop-types";
 
 export default function OnboardingBusinessForm({
   formData,
@@ -169,3 +170,12 @@ export default function OnboardingBusinessForm({
     </>
   );
 }
+
+OnboardingBusinessForm.propTypes = {
+  formData: PropTypes.object.isRequired,
+  saveFormData: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  keywordFile: PropTypes.object,
+  setKeywordFile: PropTypes.func.isRequired,
+  handleFileChange: PropTypes.func.isRequired,
+};

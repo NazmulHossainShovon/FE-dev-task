@@ -29,7 +29,7 @@ export default function OnboardingSidebar() {
               <div className="w-10 h-10 bg-[#1E8B8B] bg-opacity-10 rounded-lg flex items-center justify-center flex-shrink-0">
                 <TrendingUp className="w-5 h-5 text-[#1E8B8B]" />
               </div>
-              <p>See your brand's AI Search visibility vs Competitors</p>
+              <p>See your brand&apos;s AI Search visibility vs Competitors</p>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-[#1E8B8B] bg-opacity-10 rounded-lg flex items-center justify-center flex-shrink-0">

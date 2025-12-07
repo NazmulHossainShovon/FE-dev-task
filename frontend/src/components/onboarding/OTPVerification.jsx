@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import PropTypes from "prop-types";
 
 export default function OTPVerification({ isOpen, onClose, onVerify, email }) {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -110,7 +111,9 @@ export default function OTPVerification({ isOpen, onClose, onVerify, email }) {
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             Verify Your Email
           </h2>
-          <p className="text-gray-600 text-sm">We've sent a 6-digit code to</p>
+          <p className="text-gray-600 text-sm">
+            We&apos;ve sent a 6-digit code to
+          </p>
           <p className="text-gray-900 font-medium text-sm mt-1">{email}</p>
         </div>
 
@@ -153,7 +156,9 @@ export default function OTPVerification({ isOpen, onClose, onVerify, email }) {
         </Button>
 
         <div className="mt-6 text-center">
-          <p className="text-sm text-gray-600 mb-2">Didn't receive the code?</p>
+          <p className="text-sm text-gray-600 mb-2">
+            Didn&apos;t receive the code?
+          </p>
           <button
             onClick={handleResend}
             className="text-sm font-medium hover:underline"
@@ -168,3 +173,10 @@ export default function OTPVerification({ isOpen, onClose, onVerify, email }) {
     </div>
   );
 }
+
+OTPVerification.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onVerify: PropTypes.func.isRequired,
+  email: PropTypes.string.isRequired,
+};
