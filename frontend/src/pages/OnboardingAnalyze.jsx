@@ -166,9 +166,9 @@ export default function OnboardingAnalyze() {
         <div className="max-w-xl relative z-10 space-y-6">
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              "I have used a number of AEO tools and kept hitting a brick wall.
-              With elelem we were optimizing our content and seeing visibility
-              in AI search platforms within just 2 weeks"
+              &ldquo;I have used a number of AEO tools and kept hitting a brick
+              wall. With elelem we were optimizing our content and seeing
+              visibility in AI search platforms within just 2 weeks&rdquo;
             </p>
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center text-white font-semibold">
@@ -185,8 +185,8 @@ export default function OnboardingAnalyze() {
 
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              "elelem's process and ease of going from clueless to seeing
-              results was impressive"
+              &ldquo;elelem&apos;s process and ease of going from clueless to
+              seeing results was impressive&rdquo;
             </p>
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center text-white font-semibold">
