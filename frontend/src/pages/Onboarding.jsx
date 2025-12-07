@@ -57,8 +57,6 @@ export default function Onboarding() {
   };
 
   useEffect(() => {
-    console.log(onboardingId);
-
     if (onboardingId) {
       return;
     }
