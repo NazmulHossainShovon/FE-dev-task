@@ -42,7 +42,7 @@ const OrderSummary = ({
   const total = subtotal - discountAmount;
 
   return (
-    <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100 h-fit sticky top-8">
+    <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100 h-fit">
       <h2 className="text-2xl font-bold text-gray-900 mb-6">Order Summary</h2>
 
       <div className="mb-6">
