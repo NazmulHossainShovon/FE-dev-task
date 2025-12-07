@@ -71,6 +71,7 @@ const PaymentForm = ({ formData, setFormData, handleSubmit, isProcessing, curren
             placeholder="john@company.com"
             required
             className="h-12"
+            data-testid="billing-email-input"
           />
         </div>
 
@@ -89,6 +90,7 @@ const PaymentForm = ({ formData, setFormData, handleSubmit, isProcessing, curren
                 placeholder="1234 5678 9012 3456"
                 required
                 className="h-12 pr-12"
+                data-testid="card-number-input"
               />
               <div className="absolute right-3 top-1/2 -translate-y-1/2">
                 <CreditCard className="w-5 h-5 text-gray-400" />
@@ -103,6 +105,7 @@ const PaymentForm = ({ formData, setFormData, handleSubmit, isProcessing, curren
                 placeholder="MM/YY"
                 required
                 className="h-12"
+                data-testid="expiry-input"
               />
               <Input
                 value={formData.cvv}
@@ -117,6 +120,7 @@ const PaymentForm = ({ formData, setFormData, handleSubmit, isProcessing, curren
                 className="h-12"
                 type="password"
                 maxLength={4}
+                data-testid="cvv-input"
               />
             </div>
           </div>
@@ -134,6 +138,7 @@ const PaymentForm = ({ formData, setFormData, handleSubmit, isProcessing, curren
             placeholder="John Doe"
             required
             className="h-12"
+            data-testid="card-name-input"
           />
         </div>
 
@@ -152,6 +157,7 @@ const PaymentForm = ({ formData, setFormData, handleSubmit, isProcessing, curren
             background: 'linear-gradient(to right, #1E8B8B, #C6DE41)'
           }}
           className="w-full h-14 text-lg font-medium text-white hover:opacity-90 disabled:opacity-50"
+          data-testid="submit-payment-button"
         >
           {isProcessing ? (
             <span className="flex items-center justify-center gap-2">
