@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 const Header = () => {
   return (
     <div className="text-center mb-12">
