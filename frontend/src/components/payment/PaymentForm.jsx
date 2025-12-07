@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { CreditCard, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -170,6 +171,21 @@ const PaymentForm = ({ formData, setFormData, handleSubmit, isProcessing, curren
       </form>
     </div>
   );
+};
+
+PaymentForm.propTypes = {
+  formData: PropTypes.shape({
+    cardNumber: PropTypes.string.isRequired,
+    cardName: PropTypes.string.isRequired,
+    expiry: PropTypes.string.isRequired,
+    cvv: PropTypes.string.isRequired,
+    billingEmail: PropTypes.string.isRequired
+  }).isRequired,
+  setFormData: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  isProcessing: PropTypes.bool.isRequired,
+  currency: PropTypes.string.isRequired,
+  total: PropTypes.number.isRequired
 };
 
 export default PaymentForm;

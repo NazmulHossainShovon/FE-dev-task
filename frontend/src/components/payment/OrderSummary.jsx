@@ -1,33 +1,44 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Check, Tag } from 'lucide-react';
+import PropTypes from "prop-types";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Check, Tag } from "lucide-react";
 
-const OrderSummary = ({ plan, currency, appliedDiscount, discountCode, setDiscountCode, handleApplyDiscount, handleRemoveDiscount, isApplyingDiscount }) => {
+const OrderSummary = ({
+  plan,
+  currency,
+  appliedDiscount,
+  discountCode,
+  setDiscountCode,
+  handleApplyDiscount,
+  handleRemoveDiscount,
+  isApplyingDiscount,
+}) => {
   const plans = {
-    core: { name: 'Core', basePrice: 495, basePrompts: 100 },
-    pro: { name: 'Pro', basePrice: 995, basePrompts: 500 },
-    elite: { name: 'Elite', basePrice: 1995, basePrompts: 1000 }
+    core: { name: "Core", basePrice: 495, basePrompts: 100 },
+    pro: { name: "Pro", basePrice: 995, basePrompts: 500 },
+    elite: { name: "Elite", basePrice: 1995, basePrompts: 1000 },
   };
 
   const selectedPlan = plans[plan];
 
   const getCurrencySymbol = () => {
-    if (currency === 'GBP') return '£';
-    if (currency === 'EUR') return '€';
-    return '$';
+    if (currency === "GBP") return "£";
+    if (currency === "EUR") return "€";
+    return "$";
   };
 
   const convertPrice = (usdPrice) => {
-    if (currency === 'GBP') return Math.round(usdPrice * 0.75);
-    if (currency === 'EUR') return Math.round(usdPrice * 0.85);
+    if (currency === "GBP") return Math.round(usdPrice * 0.75);
+    if (currency === "EUR") return Math.round(usdPrice * 0.85);
     return usdPrice;
   };
 
   const basePrice = convertPrice(selectedPlan.basePrice);
   const subtotal = basePrice;
-  const discountAmount = appliedDiscount ? Math.round(subtotal * (appliedDiscount.percentage / 100)) : 0;
+  const discountAmount = appliedDiscount
+    ? Math.round(subtotal * (appliedDiscount.percentage / 100))
+    : 0;
   const total = subtotal - discountAmount;
 
   return (
@@ -36,11 +47,14 @@ const OrderSummary = ({ plan, currency, appliedDiscount, discountCode, setDiscou
 
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
-          <h3 className="text-lg font-semibold text-gray-900">{selectedPlan.name} Plan</h3>
+          <h3 className="text-lg font-semibold text-gray-900">
+            {selectedPlan.name} Plan
+          </h3>
           <Badge
             style={{
-              background: 'linear-gradient(to right, rgba(30, 139, 139, 0.1), rgba(198, 222, 65, 0.1))',
-              color: '#1E8B8B'
+              background:
+                "linear-gradient(to right, rgba(30, 139, 139, 0.1), rgba(198, 222, 65, 0.1))",
+              color: "#1E8B8B",
             }}
           >
             Monthly
@@ -55,14 +69,16 @@ const OrderSummary = ({ plan, currency, appliedDiscount, discountCode, setDiscou
         <div className="flex items-center justify-between">
           <span className="text-gray-600">{selectedPlan.name} Plan Base</span>
           <span className="font-medium text-gray-900">
-            {getCurrencySymbol()}{basePrice}
+            {getCurrencySymbol()}
+            {basePrice}
           </span>
         </div>
 
         <div className="flex items-center justify-between">
           <span className="text-gray-600">Subtotal</span>
           <span className="font-medium text-gray-900">
-            {getCurrencySymbol()}{subtotal}
+            {getCurrencySymbol()}
+            {subtotal}
           </span>
         </div>
 
@@ -73,7 +89,8 @@ const OrderSummary = ({ plan, currency, appliedDiscount, discountCode, setDiscou
               <span>Discount ({appliedDiscount.code})</span>
             </div>
             <span className="font-medium">
-              -{getCurrencySymbol()}{discountAmount}
+              -{getCurrencySymbol()}
+              {discountAmount}
             </span>
           </div>
         )}
@@ -83,7 +100,8 @@ const OrderSummary = ({ plan, currency, appliedDiscount, discountCode, setDiscou
         <span className="text-xl font-bold text-gray-900">Total</span>
         <div className="text-right">
           <div className="text-3xl font-bold text-gray-900">
-            {getCurrencySymbol()}{total}
+            {getCurrencySymbol()}
+            {total}
           </div>
           <div className="text-sm text-gray-500">per month</div>
         </div>
@@ -93,15 +111,21 @@ const OrderSummary = ({ plan, currency, appliedDiscount, discountCode, setDiscou
         <div className="flex items-start gap-3 mb-3">
           <Check className="w-5 h-5 text-[#1E8B8B] flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-medium text-gray-900">7-day money back guarantee</p>
-            <p className="text-xs text-gray-600">Cancel anytime, no questions asked</p>
+            <p className="text-sm font-medium text-gray-900">
+              7-day money back guarantee
+            </p>
+            <p className="text-xs text-gray-600">
+              Cancel anytime, no questions asked
+            </p>
           </div>
         </div>
         <div className="flex items-start gap-3">
           <Check className="w-5 h-5 text-[#1E8B8B] flex-shrink-0 mt-0.5" />
           <div>
             <p className="text-sm font-medium text-gray-900">Secure payment</p>
-            <p className="text-xs text-gray-600">Your payment information is encrypted</p>
+            <p className="text-xs text-gray-600">
+              Your payment information is encrypted
+            </p>
           </div>
         </div>
       </div>
@@ -132,17 +156,28 @@ const OrderSummary = ({ plan, currency, appliedDiscount, discountCode, setDiscou
               onClick={handleApplyDiscount}
               disabled={isApplyingDiscount || !discountCode}
               style={{
-                background: 'linear-gradient(to right, #1E8B8B, #C6DE41)'
+                background: "linear-gradient(to right, #1E8B8B, #C6DE41)",
               }}
               className="text-white hover:opacity-90"
             >
-              {isApplyingDiscount ? 'Applying...' : 'Apply'}
+              {isApplyingDiscount ? "Applying..." : "Apply"}
             </Button>
           )}
         </div>
       </div>
     </div>
   );
+};
+
+OrderSummary.propTypes = {
+  plan: PropTypes.string.isRequired,
+  currency: PropTypes.string.isRequired,
+  appliedDiscount: PropTypes.object,
+  discountCode: PropTypes.string.isRequired,
+  setDiscountCode: PropTypes.func.isRequired,
+  handleApplyDiscount: PropTypes.func.isRequired,
+  handleRemoveDiscount: PropTypes.func.isRequired,
+  isApplyingDiscount: PropTypes.bool.isRequired,
 };
 
 export default OrderSummary;
