@@ -4,16 +4,14 @@ test('select core plan and click get started now', async ({ page }) => {
   // Navigate to the home route
   await page.goto('/home');
 
-  // Select the core plan by clicking on the Core plan card/tier
-  // The Core plan card has a heading with the text "Core"
-  await page.locator('h3:has-text("Core")').click();
+  // Select the core plan by clicking on the Core plan card
+  await page.locator('[data-testid="plan-name-core"]').click();
 
   // Wait for the calculator section to update with the selected tier
-  await expect(page.locator('text=Core Plan')).toBeVisible();
+  await expect(page.locator('[data-testid="selected-plan-summary"]')).toContainText('Core Plan');
 
   // Click the "Get Started Now" button
-  // The button appears as the outlined button with "Get Started Now" text
-  await page.locator('button:has-text("Get Started Now")').click();
+  await page.locator('[data-testid="get-started-button"]').click();
 
   // Verify navigation to the payment page
   await expect(page).toHaveURL(/payment/i);

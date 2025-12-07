@@ -28,6 +28,7 @@ const PricingTiers = ({
       {tiers.map((tier) => (
         <div
           key={tier.id}
+          data-testid={`plan-card-${tier.id}`}
           onClick={() => setSelectedTier(tier.id)}
           className={`bg-white rounded-3xl shadow-xl p-8 border-2 transition-all hover:shadow-2xl relative cursor-pointer ${
             tier.popular ? "scale-105" : ""
@@ -52,7 +53,7 @@ const PricingTiers = ({
             {tier.id === "elite" && (
               <Crown className="w-8 h-8 text-[#C6DE41] mx-auto mb-2" />
             )}
-            <h3 className="text-3xl font-bold text-gray-900 mb-2">
+            <h3 data-testid={`plan-name-${tier.id}`} className="text-3xl font-bold text-gray-900 mb-2">
               {tier.name}
             </h3>
             <p className="text-gray-600 text-sm mb-6 min-h-[60px]">

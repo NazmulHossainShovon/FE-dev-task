@@ -43,7 +43,7 @@ const PricingCalculator = ({
           {calculatePrice()}
           <span className="text-lg font-normal opacity-90">/month</span>
         </div>
-        <p className="text-sm opacity-90">
+        <p data-testid="selected-plan-summary" className="text-sm opacity-90">
           {selectedTierData.name} Plan • {selectedTierData.basePrompts} Prompts
           • Up to 20 Competitors
         </p>
@@ -64,6 +64,7 @@ const PricingCalculator = ({
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
             <Button
+              data-testid="get-started-button"
               onClick={() => handleGetStarted(selectedTierData)}
               variant="outline"
               className="w-full h-14 text-lg font-medium rounded-xl border-2 border-[#1E8B8B] text-[#1E8B8B] hover:bg-[#1E8B8B] hover:text-white"
