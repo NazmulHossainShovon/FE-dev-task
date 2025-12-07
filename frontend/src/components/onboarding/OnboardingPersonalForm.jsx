@@ -21,6 +21,7 @@ export default function OnboardingPersonalForm({
         </Label>
         <Input
           id="email"
+          data-testid="email-input"
           type="email"
           value={formData.email}
           onChange={(e) => saveFormData({ ...formData, email: e.target.value })}
@@ -44,6 +45,7 @@ export default function OnboardingPersonalForm({
           </Label>
           <Input
             id="first_name"
+            data-testid="first-name-input"
             value={formData.first_name}
             onChange={(e) =>
               saveFormData({ ...formData, first_name: e.target.value })
@@ -67,6 +69,7 @@ export default function OnboardingPersonalForm({
           </Label>
           <Input
             id="last_name"
+            data-testid="last-name-input"
             value={formData.last_name}
             onChange={(e) =>
               saveFormData({ ...formData, last_name: e.target.value })
@@ -92,6 +95,7 @@ export default function OnboardingPersonalForm({
         <div className="relative">
           <Input
             id="password"
+            data-testid="password-input"
             type={showPassword ? "text" : "password"}
             value={formData.password}
             onChange={(e) =>

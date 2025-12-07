@@ -353,6 +353,7 @@ export default function Onboarding() {
 
               <Button
                 type="submit"
+                data-testid="continue-button"
                 disabled={isSubmitting}
                 className="w-full bg-gray-900 hover:bg-gray-800 text-white h-14 text-base font-medium rounded-lg"
               >

@@ -82,6 +82,7 @@ export default function OTPVerification({ isOpen, onClose, onVerify, email }) {
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative">
         <button
           onClick={onClose}
+          data-testid="close-otp-modal-button"
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
         >
           <X className="w-5 h-5" />
@@ -122,6 +123,7 @@ export default function OTPVerification({ isOpen, onClose, onVerify, email }) {
             <input
               key={index}
               ref={(el) => (inputRefs.current[index] = el)}
+              data-testid={`otp-input-${index}`}
               type="text"
               inputMode="numeric"
               maxLength={1}
@@ -146,6 +148,7 @@ export default function OTPVerification({ isOpen, onClose, onVerify, email }) {
 
         <Button
           onClick={handleVerify}
+          data-testid="verify-code-button"
           disabled={isVerifying || otp.join("").length !== 6}
           style={{
             background: "linear-gradient(to right, #1E8B8B, #C6DE41)",
@@ -161,6 +164,7 @@ export default function OTPVerification({ isOpen, onClose, onVerify, email }) {
           </p>
           <button
             onClick={handleResend}
+            data-testid="resend-code-button"
             className="text-sm font-medium hover:underline"
             style={{
               color: "#1E8B8B",

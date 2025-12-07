@@ -23,6 +23,7 @@ export default function OnboardingBusinessForm({
         </Label>
         <Input
           id="website"
+          data-testid="website-input"
           value={formData.website}
           onChange={(e) =>
             saveFormData({ ...formData, website: e.target.value })
@@ -46,6 +47,7 @@ export default function OnboardingBusinessForm({
         </Label>
         <select
           id="country"
+          data-testid="country-select"
           value={formData.country}
           onChange={(e) =>
             saveFormData({ ...formData, country: e.target.value })
@@ -111,6 +113,7 @@ export default function OnboardingBusinessForm({
         </Label>
         <Textarea
           id="business_description"
+          data-testid="business-description-textarea"
           value={formData.business_description || ""}
           onChange={(e) =>
             saveFormData({
@@ -135,6 +138,7 @@ export default function OnboardingBusinessForm({
           <input
             type="file"
             id="keyword-file"
+            data-testid="keyword-file-input"
             accept=".csv"
             onChange={handleFileChange}
             className="hidden"
